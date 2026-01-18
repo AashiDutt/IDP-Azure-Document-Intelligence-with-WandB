@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv
+
+# W&B
+wandb/
+.wandb/
+
+# Data files
+*.json
+!requirements.txt
+
+# Environment variables & credentials
+.env
+.env.local
+config_local.yaml
+*_credentials.yaml
+*_secrets.yaml
+
+# Sample invoices (optional - remove this line if you want to track them in git)
+# sample_invoices/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db

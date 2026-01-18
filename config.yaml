@@ -1,0 +1,42 @@
+# ABBYY IDP Configuration
+# Copy this to config_local.yaml and add your credentials
+
+abbyy:
+  # Platform: "flexicapture_cloud" | "vantage" | "cloud_ocr"
+  platform: "flexicapture_cloud"
+  
+  # FlexiCapture Cloud settings
+  api_url: "https://cloud-eu.abbyy.com/v2/processImage"
+  application_id: "YOUR_ABBYY_APP_ID"
+  password: "YOUR_ABBYY_PASSWORD"
+  workflow: "Invoice"
+  
+  # Vantage settings (if using Vantage instead)
+  # api_url: "https://YOUR_VANTAGE_INSTANCE/api/v1"
+  # api_key: "YOUR_VANTAGE_API_KEY"
+  # skill_id: "invoice-processing"
+  
+  # Cloud OCR SDK settings (if using Cloud OCR instead)
+  # api_url: "https://cloud.ocrsdk.com"
+  # application_id: "YOUR_APP_ID"
+  # password: "YOUR_PASSWORD"
+
+# Pipeline settings
+pipeline:
+  use_simulator: false  # Set to false to use real ABBYY API
+  pipeline_version: "1.0.0"
+
+# Validation settings
+validation:
+  low_confidence_threshold: 0.7    # Minimum confidence for auto-post
+  high_total_threshold: 100000.0   # Dollar amount requiring manual review
+  currency_tolerance:
+    USD: 0.01  # Reconciliation tolerance (subtotal + tax = total)
+    EUR: 0.01
+    GBP: 0.01
+
+# W&B settings
+wandb:
+  project: "invoice-idp-abbyy"
+  entity: null  # Your W&B username/team (optional)
+
