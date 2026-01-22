@@ -71,7 +71,7 @@ With explicit reason codes:
 ├── orchestrator.py        # Pipeline orchestrator
 ├── abbyy_adapter.py       # ABBYY IDP connector
 ├── schema.py              # Canonical schema definitions
-├── normalizer.py          # Vendor output → canonical schema
+├── normalizer.py          # Vendor output -> canonical schema
 ├── validator.py           # Validation and routing logic
 ├── data_generator.py      # Test data generation
 ├── vendor_extractor.py    # Simulator (for testing)
@@ -180,12 +180,12 @@ See [SETUP.md](SETUP.md) for platform-specific configuration.
 
 ## Next Steps
 
-1. ✅ Run demo with simulator to understand the flow
-2. ✅ Set up ABBYY credentials (choose FlexiCapture Cloud for easiest start)
-3. ✅ Process 10-20 real invoices
-4. ✅ Review results in W&B dashboard
-5. ✅ Adjust validation thresholds based on your business rules
-6. ✅ Deploy with continuous monitoring via W&B
+1. [x] Run demo with simulator to understand the flow
+2. [x] Set up ABBYY credentials (choose FlexiCapture Cloud for easiest start)
+3. [x] Process 10-20 real invoices
+4. [x] Review results in W&B dashboard
+5. [x] Adjust validation thresholds based on your business rules
+6. [x] Deploy with continuous monitoring via W&B
 
 ## License
 

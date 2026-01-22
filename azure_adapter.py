@@ -43,7 +43,7 @@ class AzureDocumentIntelligenceAdapter:
         Returns:
             Standardized extraction result
         """
-        print(f"  → Sending to Azure Document Intelligence...")
+        print(f"  - Sending to Azure Document Intelligence...")
         
         # Determine if input is URL or file path
         if file_path_or_url.startswith(('http://', 'https://')):
@@ -68,7 +68,7 @@ class AzureDocumentIntelligenceAdapter:
         
         # Wait for result
         result = poller.result()
-        print(f"  ✓ Extraction completed")
+        print(f"  * Extraction completed")
         
         # Convert to standard format
         return self._normalize_azure_response(result, doc_id)
@@ -120,7 +120,7 @@ class AzureDocumentIntelligenceAdapter:
                     "value": calculated_total,
                     "confidence": total_field["confidence"]  # Keep original confidence
                 }
-                print(f"    💡 Calculated total from line items: ${calculated_total:.2f}")
+                print(f"    INFO: Calculated total from line items: ${calculated_total:.2f}")
         
         # Map Azure fields to our canonical schema
         normalized = {

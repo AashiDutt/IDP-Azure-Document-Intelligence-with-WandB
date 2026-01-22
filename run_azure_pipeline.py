@@ -27,7 +27,7 @@ load_dotenv()
 
 class AzurePipeline:
     """
-    Pipeline for Azure Document Intelligence → Canonical Schema → W&B
+    Pipeline for Azure Document Intelligence -> Canonical Schema -> W&B
     """
     
     def __init__(self, azure_endpoint: str, azure_key: str, wandb_project: str = "invoice-azure-wandb"):
@@ -108,31 +108,31 @@ class AzurePipeline:
             "azure_document_intelligence",
             "prebuilt-invoice"
         )
-        print(f"  ✓ Normalized to canonical schema")
-        print(f"  → Invoice #: {normalized.invoice_number.value if normalized.invoice_number else 'N/A'}")
-        print(f"  → Supplier: {normalized.supplier_name.value if normalized.supplier_name else 'N/A'}")
+        print(f"  * Normalized to canonical schema")
+        print(f"  - Invoice #: {normalized.invoice_number.value if normalized.invoice_number else 'N/A'}")
+        print(f"  - Supplier: {normalized.supplier_name.value if normalized.supplier_name else 'N/A'}")
         total_val = normalized.total.value if normalized.total else 0
         total_conf = normalized.total.confidence if normalized.total else 0
-        print(f"  → Total: ${float(total_val) if total_val else 0:.2f}")
-        print(f"  → Confidence: {total_conf:.2%}")
+        print(f"  - Total: ${float(total_val) if total_val else 0:.2f}")
+        print(f"  - Confidence: {total_conf:.2%}")
         
         # Step 3: Validate
         print("\n[3/4] Validation")
         validation = self.validator.validate(normalized)
         if validation.passed:
-            print(f"  ✓ Validation PASSED")
+            print(f"  * Validation PASSED")
         else:
-            print(f"  ✗ Validation FAILED")
+            print(f"  * Validation FAILED")
             for error in validation.errors:
                 print(f"    • {error}")
         
         # Step 4: Route
         print("\n[4/4] Routing Decision")
         routing = self.validator.route(normalized, validation)
-        print(f"  → Outcome: {routing.outcome}")
-        print(f"  → Confidence: {routing.confidence_score:.2%}")
+        print(f"  - Outcome: {routing.outcome}")
+        print(f"  - Confidence: {routing.confidence_score:.2%}")
         if routing.reason_codes:
-            print(f"  → Reasons: {', '.join(routing.reason_codes)}")
+            print(f"  - Reasons: {', '.join(routing.reason_codes)}")
         
         # Step 5: Business Analysis
         print("\n[5/5] Business Analysis")
@@ -150,10 +150,10 @@ class AzurePipeline:
             },
             raw_output
         )
-        print(f"  → Category: {business_insights['category']}")
-        print(f"  → Priority: {business_insights['priority']}")
-        print(f"  → Risk Level: {business_insights['risk_level']}")
-        print(f"  → Processing Cost: ${business_insights['processing_cost']:.4f}")
+        print(f"  - Category: {business_insights['category']}")
+        print(f"  - Priority: {business_insights['priority']}")
+        print(f"  - Risk Level: {business_insights['risk_level']}")
+        print(f"  - Processing Cost: ${business_insights['processing_cost']:.4f}")
         
         print(f"\n{'='*70}\n")
         
@@ -266,7 +266,7 @@ class AzurePipeline:
                 })
                 
             except Exception as e:
-                print(f"❌ Error: {e}")
+                print(f"ERROR: {e}")
                 all_results.append({
                     "doc_id": doc_id,
                     "status": "error",
@@ -281,7 +281,7 @@ class AzurePipeline:
         # Save JSON output
         with open(output_file, 'w') as f:
             json.dump(all_results, f, indent=2)
-        print(f"\n✓ Saved results to {output_file}")
+        print(f"\n* Saved results to {output_file}")
         
         # Log to W&B
         self._log_to_wandb(table_rows, output_file)
@@ -300,13 +300,13 @@ class AzurePipeline:
         # Main results table
         table = wandb.Table(dataframe=df)
         wandb.log({"invoice_results_table": table})
-        print("  ✓ Logged results table")
+        print("  * Logged results table")
         
         # Log JSON file as artifact
         artifact = wandb.Artifact("invoice_results", type="dataset")
         artifact.add_file(json_file)
         wandb.log_artifact(artifact)
-        print(f"  ✓ Logged JSON artifact: {json_file}")
+        print(f"  * Logged JSON artifact: {json_file}")
         
         # Filter successful extractions
         success_df = df[df["status"] == "success"]
@@ -349,7 +349,7 @@ class AzurePipeline:
                 metrics["low_confidence_count"] = success_df["has_low_confidence"].sum()
             
             wandb.log(metrics)
-            print("  ✓ Logged core metrics")
+            print("  * Logged core metrics")
             
             # === CONFIDENCE DISTRIBUTION HISTOGRAM ===
             if "conf_total" in success_df.columns and success_df["conf_total"].notna().any():
@@ -362,7 +362,7 @@ class AzurePipeline:
                         title="Confidence Score Distribution (Total Field)"
                     )
                 })
-                print("  ✓ Logged confidence distribution")
+                print("  * Logged confidence distribution")
             
             # === ROUTING OUTCOME PIE CHART ===
             routing_counts = success_df["routing_outcome"].value_counts()
@@ -376,7 +376,7 @@ class AzurePipeline:
                     title="Routing Decisions: AUTO_POST vs NEEDS_REVIEW"
                 )
             })
-            print("  ✓ Logged routing distribution")
+            print("  * Logged routing distribution")
             
             # === REASON CODES ANALYSIS ===
             reason_code_counts = {}
@@ -396,7 +396,7 @@ class AzurePipeline:
                         title="Top Reason Codes for Manual Review"
                     )
                 })
-                print("  ✓ Logged reason codes analysis")
+                print("  * Logged reason codes analysis")
             
             # === FIELD-LEVEL CONFIDENCE COMPARISON ===
             if "conf_invoice_number" in success_df.columns:
@@ -416,7 +416,7 @@ class AzurePipeline:
                         title="Average Confidence by Field"
                     )
                 })
-                print("  ✓ Logged field-level confidence comparison")
+                print("  * Logged field-level confidence comparison")
             
             # === VALIDATION CHECKS BREAKDOWN ===
             validation_checks = []
@@ -436,7 +436,7 @@ class AzurePipeline:
                         title="Validation Pass/Fail"
                     )
                 })
-                print("  ✓ Logged validation breakdown")
+                print("  * Logged validation breakdown")
             
             # === SUCCESS vs FAILURE ===
             status_data = [
@@ -452,7 +452,7 @@ class AzurePipeline:
                     title="Extraction Success vs Failure"
                 )
             })
-            print("  ✓ Logged success/failure breakdown")
+            print("  * Logged success/failure breakdown")
             
             # === BUSINESS INSIGHTS VISUALIZATIONS ===
             
@@ -466,10 +466,10 @@ class AzurePipeline:
                         category_table,
                         "category",
                         "count",
-                        title="📊 Invoice Categories Distribution"
+                        title="Invoice Categories Distribution"
                     )
                 })
-                print("  ✓ Logged document categories")
+                print("  * Logged document categories")
             
             # 2. Total Cost by Category
             if "category" in success_df.columns and "total" in success_df.columns:
@@ -482,10 +482,10 @@ class AzurePipeline:
                         cost_category_table,
                         "category",
                         "total_amount",
-                        title="💰 Total Cost by Category"
+                        title="Total Cost by Category"
                     )
                 })
-                print("  ✓ Logged cost by category")
+                print("  * Logged cost by category")
             
             # 3. Priority Distribution
             if "priority" in success_df.columns:
@@ -498,10 +498,10 @@ class AzurePipeline:
                         priority_table,
                         "priority",
                         "count",
-                        title="🚨 Invoice Priority Levels"
+                        title="Invoice Priority Levels"
                     )
                 })
-                print("  ✓ Logged priority distribution")
+                print("  * Logged priority distribution")
             
             # 4. Risk Level Distribution
             if "risk_level" in success_df.columns:
@@ -513,10 +513,10 @@ class AzurePipeline:
                         risk_table,
                         "risk_level",
                         "count",
-                        title="⚠️ Risk Level Assessment"
+                        title="Risk Level Assessment"
                     )
                 })
-                print("  ✓ Logged risk levels")
+                print("  * Logged risk levels")
             
             # 5. Processing Cost Summary
             if "processing_cost" in success_df.columns:
@@ -526,7 +526,7 @@ class AzurePipeline:
                     "total_processing_cost": total_cost,
                     "avg_processing_cost_per_invoice": avg_cost
                 })
-                print(f"  ✓ Logged processing costs (Total: ${total_cost:.4f})")
+                print(f"  * Logged processing costs (Total: ${total_cost:.4f})")
             
             # 6. Document Quality Assessment
             if "document_quality" in success_df.columns:
@@ -538,10 +538,10 @@ class AzurePipeline:
                         quality_table,
                         "quality",
                         "count",
-                        title="📄 Document Quality Assessment"
+                        title="Document Quality Assessment"
                     )
                 })
-                print("  ✓ Logged document quality")
+                print("  * Logged document quality")
             
             # 7. Top Suppliers by Volume
             if "supplier_name" in success_df.columns:
@@ -553,10 +553,10 @@ class AzurePipeline:
                         supplier_table,
                         "supplier",
                         "invoice_count",
-                        title="🏢 Top Suppliers by Volume"
+                        title="Top Suppliers by Volume"
                     )
                 })
-                print("  ✓ Logged top suppliers")
+                print("  * Logged top suppliers")
             
             # 8. ENHANCED AZURE EXTRACTION INSIGHTS
             # Show what Azure actually extracted
@@ -569,14 +569,14 @@ class AzurePipeline:
                 "failed_extractions": len(df),
                 "success_rate": 0.0
             })
-            print("  ⚠️  No successful extractions to analyze")
+            print("  WARNING: No successful extractions to analyze")
         
         print(f"{'='*70}\n")
     
     def finish(self):
         """Finish W&B run."""
         wandb.finish()
-        print("✓ Pipeline completed. Check W&B dashboard!")
+        print("* Pipeline completed. Check W&B dashboard!")
 
 
 def main():
@@ -588,7 +588,7 @@ def main():
     
     # Validate credentials are set
     if not AZURE_ENDPOINT or not AZURE_KEY:
-        print("\n❌ ERROR: Azure credentials not found!")
+        print("\nERROR: Azure credentials not found!")
         print("\nPlease set environment variables:")
         print("  export AZURE_ENDPOINT='your-endpoint-here'")
         print("  export AZURE_KEY='your-api-key-here'")
@@ -644,8 +644,8 @@ def main():
     print(f"  NEEDS_REVIEW: {success_count - auto_post}")
     
     print("\n" + "="*70)
-    print("✓ Results saved to: azure_results.json")
-    print("✓ Check W&B dashboard for interactive analysis!")
+    print("* Results saved to: azure_results.json")
+    print("* Check W&B dashboard for interactive analysis!")
     print("="*70 + "\n")
     
     # Finish

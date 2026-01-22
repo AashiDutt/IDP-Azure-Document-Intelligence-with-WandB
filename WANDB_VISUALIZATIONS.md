@@ -1,6 +1,6 @@
 # W&B Visualizations for IDP with Azure Document Intelligence
 
-## 🎯 View Your Dashboard
+## View Your Dashboard
 
 **Latest Run**: https://wandb.ai/aashi/invoice-azure-wandb/runs/quvzxcoy
 
@@ -8,7 +8,7 @@
 
 ---
 
-## 📊 What's Now Visible in W&B
+## What's Now Visible in W&B
 
 ### 1. **Confidence Distribution Histogram**
 **Shows**: Distribution of confidence scores across all extracted fields
@@ -60,9 +60,9 @@
 - Compare vendor performance on different field types
 
 **Current Results**:
-- Invoice Number: 95.5% confidence ✅
-- Total: 93.9% confidence ✅
-- Supplier Name: High confidence ✅
+- Invoice Number: 95.5% confidence [OK]
+- Total: 93.9% confidence [OK]
+- Supplier Name: High confidence [OK]
 
 ---
 
@@ -106,7 +106,7 @@
 
 ---
 
-## 💡 How This Demonstrates W&B + IDP Value
+## How This Demonstrates W&B + IDP Value
 
 ### 1. **Real-Time Monitoring**
 - See extraction quality immediately
@@ -135,13 +135,13 @@
 
 ---
 
-## 🔄 Continuous Improvement Workflow
+## Continuous Improvement Workflow
 
 ```
-1. Process invoices → W&B logs metrics
-2. Review dashboard → Identify bottlenecks
-3. Adjust rules/thresholds → Deploy changes
-4. Compare runs → Measure improvement
+1. Process invoices -> W&B logs metrics
+2. Review dashboard -> Identify bottlenecks
+3. Adjust rules/thresholds -> Deploy changes
+4. Compare runs -> Measure improvement
 5. Repeat
 ```
 
@@ -153,12 +153,12 @@
 **Week 2**: Added tax validation rules
 - W&B shows: Auto-post rate = 75% (+15%)
 
-**Week 3**: Adjusted confidence threshold 0.7 → 0.65
+**Week 3**: Adjusted confidence threshold 0.7 -> 0.65
 - W&B shows: Auto-post rate = 82% (+7%), no increase in errors
 
 ---
 
-## 📈 Advanced Analytics (Coming Next)
+## Advanced Analytics (Coming Next)
 
 Add these to show even more value:
 
@@ -184,7 +184,7 @@ Add these to show even more value:
 
 ---
 
-## 🎯 Next Steps
+## Next Steps
 
 1. **Add More Invoices**: Process 100+ invoices to see trends
    ```bash
@@ -201,7 +201,7 @@ Add these to show even more value:
    ```
 
 3. **Set Up Alerts**: Get notified when metrics drop
-   - Go to W&B dashboard → Alerts
+   - Go to W&B dashboard -> Alerts
    - Set threshold: "alert if success_rate < 95%"
 
 4. **Share Dashboard**: Show stakeholders
@@ -211,23 +211,23 @@ Add these to show even more value:
 
 ---
 
-## 💼 Business Value Summary
+## Business Value Summary
 
 | Before W&B | With W&B + Azure IDP |
 |------------|---------------------|
-| ❌ No visibility into extraction quality | ✅ Real-time confidence scores |
-| ❌ Can't compare vendors | ✅ Side-by-side vendor comparison |
-| ❌ No audit trail | ✅ Full versioning of data + configs |
-| ❌ Manual error tracking | ✅ Automated error analysis |
-| ❌ Guessing at thresholds | ✅ Data-driven optimization |
-| ❌ Can't explain failures | ✅ Detailed reason codes |
-| ❌ No trend analysis | ✅ Historical metrics & charts |
+| X No visibility into extraction quality | + Real-time confidence scores |
+| X Can't compare vendors | + Side-by-side vendor comparison |
+| X No audit trail | + Full versioning of data + configs |
+| X Manual error tracking | + Automated error analysis |
+| X Guessing at thresholds | + Data-driven optimization |
+| X Can't explain failures | + Detailed reason codes |
+| X No trend analysis | + Historical metrics & charts |
 
 **Bottom Line**: W&B turns Azure Document Intelligence from a "black box" into a **transparent, optimizable, auditable system**.
 
 ---
 
-## 📚 Documentation
+## Documentation
 
 - Azure Document Intelligence: https://learn.microsoft.com/azure/ai-services/document-intelligence/
 - W&B Docs: https://docs.wandb.ai/

@@ -279,12 +279,12 @@ You can compare Azure vs ABBYY results:
 
 ## Next Steps
 
-1. ✅ Run with sample invoice
-2. ✅ Add your own invoices
-3. ✅ Review results in W&B
-4. ✅ Adjust validation thresholds
-5. ✅ Set up automated processing
-6. ✅ Monitor accuracy over time
+1. [x] Run with sample invoice
+2. [x] Add your own invoices
+3. [x] Review results in W&B
+4. [x] Adjust validation thresholds
+5. [x] Set up automated processing
+6. [x] Monitor accuracy over time
 
 ## Support
 

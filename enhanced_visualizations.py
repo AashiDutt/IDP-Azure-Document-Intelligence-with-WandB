@@ -35,10 +35,10 @@ def log_azure_extraction_insights(df, all_results):
                 field_table,
                 "field",
                 "extraction_success_rate",
-                title="🎯 Azure Field Extraction Success Rate (%)"
+                title="Azure Field Extraction Success Rate (%)"
             )
         })
-        print("  ✓ Logged field extraction rates")
+        print("  * Logged field extraction rates")
     
     # 2. CONFIDENCE SCORE HEATMAP
     # Show confidence scores for each invoice and field
@@ -62,7 +62,7 @@ def log_azure_extraction_insights(df, all_results):
             columns=["document", "field", "confidence"]
         )
         wandb.log({"confidence_heatmap": conf_heatmap_table})
-        print("  ✓ Logged confidence heatmap")
+        print("  * Logged confidence heatmap")
     
     # 3. EXTRACTED VS MISSING FIELDS
     # Show what was successfully extracted vs what's missing
@@ -79,10 +79,10 @@ def log_azure_extraction_insights(df, all_results):
             extraction_table,
             "status",
             "count",
-            title="📋 Invoice Number: Extracted vs Missing"
+            title="Invoice Number: Extracted vs Missing"
         )
     })
-    print("  ✓ Logged extraction completeness")
+    print("  * Logged extraction completeness")
     
     # 4. ACTUAL TEXT EXTRACTED
     # Show what Azure actually found
@@ -95,8 +95,8 @@ def log_azure_extraction_insights(df, all_results):
         "suppliers_list": list(extracted_suppliers)[:10],  # First 10
         "invoice_numbers_list": list(extracted_numbers)[:10]
     })
-    print(f"  ✓ Found {len(extracted_suppliers)} unique suppliers")
-    print(f"  ✓ Found {len(extracted_numbers)} unique invoice numbers")
+    print(f"  * Found {len(extracted_suppliers)} unique suppliers")
+    print(f"  * Found {len(extracted_numbers)} unique invoice numbers")
     
     # 5. DOCUMENT COMPARISON
     # Compare documents side by side
@@ -118,15 +118,15 @@ def log_azure_extraction_insights(df, all_results):
             columns=["Document", "Supplier", "Invoice#", "Amount", "Confidence%", "Category"]
         )
         wandb.log({"document_comparison": comparison_table})
-        print("  ✓ Logged document comparison table")
+        print("  * Logged document comparison table")
     
     # 6. CATEGORIZATION INSIGHTS
     # Show how documents were categorized
     if "category" in df.columns:
         category_breakdown = df["category"].value_counts()
-        print(f"\n  📊 Categories detected:")
+        print(f"\n  Categories detected:")
         for cat, count in category_breakdown.items():
-            print(f"    • {cat}: {count}")
+            print(f"    - {cat}: {count}")
     
     # 7. WHAT'S MISSING (Most Important for Debugging)
     missing_analysis = {
@@ -137,8 +137,8 @@ def log_azure_extraction_insights(df, all_results):
     
     wandb.log(missing_analysis)
     
-    print(f"\n  ⚠️  Missing Data Summary:")
-    print(f"    • {missing_analysis['invoices_missing_total']} invoices missing total")
-    print(f"    • {missing_analysis['invoices_missing_date']} invoices missing date")
-    print(f"    • {missing_analysis['invoices_missing_supplier']} invoices missing supplier")
+    print(f"\n  WARNING: Missing Data Summary:")
+    print(f"    - {missing_analysis['invoices_missing_total']} invoices missing total")
+    print(f"    - {missing_analysis['invoices_missing_date']} invoices missing date")
+    print(f"    - {missing_analysis['invoices_missing_supplier']} invoices missing supplier")
 
